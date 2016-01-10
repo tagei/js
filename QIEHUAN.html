@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>焦点图片切换</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width" initial-scale="1">
+	<style type="text/css">
+	*{margin: 0;padding: 0;list-style: none;}
+	.wrap{margin: 60px auto;
+		width: 490px;
+		height: 170px;
+		overflow: hidden;
+		position: relative;
+		margin: 100px auto}
+	.wrap ul{position: absolute;}
+	.wrap ul li{height: 170px;}
+	.wrap ol{position: absolute;margin-left: 320px;}
+	.wrap ol li{width: 20px;
+				height: 20px;
+				border: 1px solid #000;
+				color: #000;
+				float: left;
+				margin-top:140px;
+				line-height: 20px;
+				text-align: center;
+				margin-left:10px; 
+				cursor: pointer;}
+	.wrap ol .on{color:#fff;
+			background: #f60; }
+	</style>
+	<script type="text/javascript">
+	window.onload=function(){
+		var wrap=document.getElementById('wrap'),
+			 pic=document.getElementById('pic').getElementsByTagName('li'),
+		 	list=document.getElementById('list').getElementsByTagName('li'),
+		 	index=0;
+		 	timer=null;
+
+		 	//定义切换图片的函数
+		 	function changePic(curIndex){
+		 		for(var i=0;i<list.length;i++){
+		 			
+		 			list[i].className="";
+		 			pic[i].style.display='none';
+		 		}
+		 		list[curIndex].className='on';
+		 		pic[curIndex].style.display='block';
+		 		index=curIndex;
+		 	
+		 		}
+		 		
+		 	
+		 	//清除定时器
+		 	if(timer){
+		 		clearInterval(timer);
+		 		timer=null;
+		 	}
+		 	timer=setInterval(play,2000);
+
+		 	function play(){
+		 		index++;
+		 		if(index>=list.length){
+		 			index=0;
+		 		}
+		 		changePic(index);
+		 	}
+		 	//当鼠标滑过时停止播放
+		 	wrap.onmouseover=function(){
+		 		clearInterval(timer);
+		 	}
+		 	//当鼠标离开时播放下一张图片
+		 	wrap.onmouseout=function(){
+		 		timer=setInterval(play,2000);
+
+		 	}
+		 	
+		 	//遍历所有数字滑过时切换对应的图片
+		 	for(var i=0;i<=pic.length;i++){
+		 		list[i]=i;
+		 		list[i].onmouseover=function(){
+		 			changePic(index);
+		 		}
+		 	}
+	}
+	</script>
+</head>
+<body>
+<div class="wrap" id="wrap">
+	<ul id="pic">
+		<li style="display:block"><img src="http://img.mukewang.com/54111cd9000174cd04900170.jpg" alt=""></li>
+      <li style="display:none"><img src="http://img.mukewang.com/54111dac000118af04900170.jpg" alt=""></li>
+      <li style="display:none"><img src="http://img.mukewang.com/54111d9c0001998204900170.jpg" alt=""></li>
+      <li style="display:none"><img src="http://img.mukewang.com/54111d8a0001f41704900170.jpg" alt=""></li>
+      <li style="display:none"><img src="http://img.mukewang.com/54111d7d00018ba604900170.jpg" alt=""></li>  
+	</ul>
+	<ol id="list">
+		<li class="on">1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ol>
+</div>
+</body>
+</html>
