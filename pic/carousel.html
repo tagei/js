@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title>图片轮播</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatel"content="IE-edge">
+	<style rel="stylesheet" type="text/css">
+	body,div,ul,ol,li,img{margin: 0;padding: 0;border: 0;list-style: none;}
+	.wrap{width: 700px;height: 500px;border: 1px solid red;position: relative;margin: 100px auto;overflow: hidden;}
+	.wrap ul{position: absolute;}
+	.wrap ol{position: absolute;z-index: 100;bottom: 10px;right: 10px;}
+	.wrap ul li{float: left;}
+	.wrap ul li img{width: 700px;height: 500px;}
+	.wrap ol li{float: left;width:10px;height: 10px;border-radius: 50% ;line-height: 20px;border: 1px solid #000;text-align: center;margin-left: 10px;}
+	.on{color: #fff;background: #f60;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var wrap=document.getElementById('wrap'),
+				pic=document.getElementById('pic').getElementsByTagName('li'),
+				list=document.getElementById('list').getElementsByTagName('li'),
+				index=0,
+				timer=null;
+					function changePic(curIndex){
+					for(var i=0;i<list.length;i++){
+						list[i]=i;
+						list[i].className='';
+						pic[i].style.display='none';
+					}
+					list[curIndex].className='on';
+					pic[curIndex].style.display='block';
+					index=curIndex;
+				}
+
+				//清除定时器
+					if(timer){
+					clearInterval(timer);
+					timer=null;
+				}
+				timer=setInterval(play,2000);
+			//定义函数切换图片
+			function play(){
+				index++;
+				if(index>=list.length){
+					index=0;
+					
+				}
+				changePic(index);
+				//鼠标滑过时停止切换
+				}
+				wrap.onmouseover=function(){
+					clearInterval(timer);
+				}
+			//鼠标离开时自动切换
+				wrap.onmouseout=function(){
+					timer=setInterval(play,2000);
+				}
+			
+				for(var i=0;i<pic.length;i++){
+					list[i]=i;
+					list[i].onmouseover=function(){
+						changePic(index);
+					}
+				}			
+		}
+	</script>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+		<ul id="pic">
+			<li><img src="img/1-1.jpg"></li>
+			<li><img src="img/1-2.jpg"></li>
+			<li><img src="img/1-3.jpg"></li>
+			<li><img src="img/1-4.jpg"></li>
+			<li><img src="img/1-5.jpg"></li>
+		</ul>
+		<ol id="list">
+			<li class="on"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+
+		</ol>
+	</div>
+</body>
+</html>
